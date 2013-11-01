@@ -1,0 +1,423 @@
+<list> 0
+test/indexer.c 1 test/hashtable.h 1 test/BUG/indexer.c 1
+</list>
+<list> 1
+test/hashtable.h 1
+</list>
+<list> 100
+test/indexer.c 1 test/BUG/indexer.c 1
+</list>
+<list> 75
+test/indexer.c 1 test/BUG/indexer.c 1
+</list>
+<list> a
+test/hashtable.h 3
+</list>
+<list> all
+test/makefile 1 test/m3 1 test/m2 1
+</list>
+<list> already
+test/hashtable.h 1
+</list>
+<list> and
+test/hashtable.h 2
+</list>
+<list> are
+test/hashtable.h 1
+</list>
+<list> being
+test/hashtable.h 1
+</list>
+<list> bin
+test/t 1 test/compile 1 test/HERRO/compile 1 test/BUG/lol 1
+</list>
+<list> c
+test/t 2 test/makefile 8 test/m3 8 test/m2 8 test/compile 2
+test/HERRO/compile 2 test/BUG/lol 2
+</list>
+<list> c99
+test/makefile 1 test/m3 1 test/m2 1
+</list>
+<list> capacity
+test/hashtable.h 2
+</list>
+<list> ccflags
+test/makefile 6 test/m3 6 test/m2 6
+</list>
+<list> char
+test/indexer.h 2 test/indexer.c 4 test/BUG/indexer.c 4
+</list>
+<list> clean
+test/makefile 1 test/m3 1 test/m2 1
+</list>
+<list> compare
+test/hashtable.h 1
+</list>
+<list> comparefunc
+test/hashtable.h 3
+</list>
+<list> comparestrings
+test/indexer.c 1 test/hashtable.h 1 test/BUG/indexer.c 1
+</list>
+<list> compfunc
+test/hashtable.h 3
+</list>
+<list> compiler
+test/makefile 5 test/m3 5 test/m2 5
+</list>
+<list> count
+test/indexer.h 1
+</list>
+<list> creates
+test/hashtable.h 1
+</list>
+<list> data
+test/indexer.c 3 test/hashtable.h 8 test/BUG/indexer.c 3
+</list>
+<list> define
+test/indexer.h 1 test/hashtable.h 1
+</list>
+<list> do
+test/hashtable.h 1
+</list>
+<list> e
+test/hashtable.h 1
+</list>
+<list> endif
+test/indexer.h 1 test/hashtable.h 1
+</list>
+<list> f
+test/makefile 2 test/m3 2 test/m2 2
+</list>
+<list> filename
+test/indexer.h 1
+</list>
+<list> filenode
+test/indexer.h 6
+</list>
+<list> fileshead
+test/indexer.h 1
+</list>
+<list> filestail
+test/indexer.h 1
+</list>
+<list> float
+test/hashtable.h 2
+</list>
+<list> for
+test/hashtable.h 2
+</list>
+<list> found
+test/indexer.c 3 test/hashtable.h 1 test/BUG/indexer.c 3
+</list>
+<list> from
+test/hashtable.h 3
+</list>
+<list> function
+test/hashtable.h 3
+</list>
+<list> g
+test/makefile 2 test/m3 2 test/m2 2 test/hashtable.h 1
+</list>
+<list> gcc
+test/t 2 test/makefile 1 test/m3 1 test/m2 1 test/compile 2
+test/HERRO/compile 2 test/BUG/lol 2
+</list>
+<list> get
+test/hashtable.h 1
+</list>
+<list> gets
+test/hashtable.h 1
+</list>
+<list> given
+test/hashtable.h 3
+</list>
+<list> h
+test/makefile 4 test/m3 4 test/m2 4 test/indexer.h 2 test/indexer.c 3
+test/hashtable.h 2 test/BUG/indexer.c 3
+</list>
+<list> hash
+test/hashtable.h 16
+</list>
+<list> hashcreate
+test/indexer.c 1 test/hashtable.h 1 test/BUG/indexer.c 1
+</list>
+<list> hashfunc
+test/hashtable.h 6
+</list>
+<list> hashget
+test/indexer.c 3 test/hashtable.h 1 test/BUG/indexer.c 3
+</list>
+<list> hashput
+test/indexer.c 2 test/hashtable.h 1 test/BUG/indexer.c 2
+</list>
+<list> hashtable
+test/makefile 7 test/m3 7 test/m2 7 test/indexer.c 2 test/hashtable.h 6
+test/BUG/indexer.c 2
+</list>
+<list> hashtableresize
+test/hashtable.h 1
+</list>
+<list> ht
+test/indexer.c 6 test/hashtable.h 6 test/BUG/indexer.c 6
+</list>
+<list> if
+test/hashtable.h 6
+</list>
+<list> ifndef
+test/indexer.h 1 test/hashtable.h 1
+</list>
+<list> in
+test/hashtable.h 3
+</list>
+<list> include
+test/indexer.c 3 test/BUG/indexer.c 3
+</list>
+<list> index
+test/t 3 test/makefile 9 test/m3 9 test/m2 9 test/compile 3
+test/HERRO/compile 3 test/BUG/lol 3
+</list>
+<list> indexer
+test/indexer.h 2
+</list>
+<list> init
+test/hashtable.h 1
+</list>
+<list> inital
+test/hashtable.h 1
+</list>
+<list> initsize
+test/hashtable.h 2
+</list>
+<list> input
+test/hashtable.h 1
+</list>
+<list> insert
+test/hashtable.h 3
+</list>
+<list> inserted
+test/hashtable.h 1
+</list>
+<list> int
+test/indexer.h 1 test/indexer.c 1 test/hashtable.h 10 test/BUG/indexer.c 1
+</list>
+<list> into
+test/hashtable.h 3
+</list>
+<list> is
+test/hashtable.h 3
+</list>
+<list> it
+test/hashtable.h 3
+</list>
+<list> javastringhash
+test/indexer.c 1 test/hashtable.h 1 test/BUG/indexer.c 1
+</list>
+<list> key
+test/indexer.c 2 test/hashtable.h 7 test/BUG/indexer.c 2
+</list>
+<list> key2
+test/indexer.c 2 test/BUG/indexer.c 2
+</list>
+<list> key3
+test/indexer.c 1 test/BUG/indexer.c 1
+</list>
+<list> llnode
+test/hashtable.h 5
+</list>
+<list> loadfactor
+test/hashtable.h 2
+</list>
+<list> main
+test/BUG/indexer.c 1
+</list>
+<list> maintest
+test/indexer.c 1
+</list>
+<list> make
+test/hashtable.h 1
+</list>
+<list> matching
+test/hashtable.h 1
+</list>
+<list> met
+test/hashtable.h 1
+</list>
+<list> negative
+test/hashtable.h 1
+</list>
+<list> new
+test/hashtable.h 1
+</list>
+<list> newcapacity
+test/hashtable.h 2
+</list>
+<list> next
+test/hashtable.h 1
+</list>
+<list> nextfile
+test/indexer.h 1
+</list>
+<list> nikolay
+test/t 1 test/makefile 1 test/m3 1 test/m2 1 test/indexer.h 1
+test/indexer.c 1 test/hashtable.h 1 test/compile 1 test/HERRO/compile 1 test/BUG/lol 1
+test/BUG/indexer.c 1
+</list>
+<list> no
+test/hashtable.h 1
+</list>
+<list> not
+test/indexer.c 3 test/hashtable.h 2 test/BUG/indexer.c 3
+</list>
+<list> null
+test/indexer.c 3 test/hashtable.h 2 test/BUG/indexer.c 3
+</list>
+<list> numobjects
+test/hashtable.h 1
+</list>
+<list> o
+test/t 2 test/makefile 9 test/m3 9 test/m2 9 test/compile 2
+test/HERRO/compile 2 test/BUG/lol 2
+</list>
+<list> objects
+test/hashtable.h 1
+</list>
+<list> of
+test/hashtable.h 3
+</list>
+<list> output
+test/indexer.c 9 test/BUG/indexer.c 9
+</list>
+<list> p1
+test/hashtable.h 1
+</list>
+<list> p2
+test/hashtable.h 1
+</list>
+<list> param
+test/hashtable.h 10
+</list>
+<list> parameters
+test/hashtable.h 2
+</list>
+<list> pointer
+test/hashtable.h 1
+</list>
+<list> printf
+test/indexer.c 3 test/BUG/indexer.c 3
+</list>
+<list> problems
+test/hashtable.h 1
+</list>
+<list> puts
+test/hashtable.h 1
+</list>
+<list> resize
+test/hashtable.h 1
+</list>
+<list> resizes
+test/hashtable.h 1
+</list>
+<list> retrive
+test/hashtable.h 1
+</list>
+<list> return
+test/indexer.c 1 test/hashtable.h 3 test/BUG/indexer.c 1
+</list>
+<list> returns
+test/hashtable.h 1
+</list>
+<list> rm
+test/makefile 2 test/m3 2 test/m2 2
+</list>
+<list> s
+test/indexer.c 3 test/BUG/indexer.c 3
+</list>
+<list> sense
+test/hashtable.h 1
+</list>
+<list> sh
+test/t 1 test/compile 1 test/HERRO/compile 1 test/BUG/lol 1
+</list>
+<list> size
+test/hashtable.h 2
+</list>
+<list> std
+test/makefile 1 test/m3 1 test/m2 1
+</list>
+<list> stdio
+test/indexer.c 1 test/BUG/indexer.c 1
+</list>
+<list> stored
+test/hashtable.h 1
+</list>
+<list> str
+test/hashtable.h 1
+</list>
+<list> string
+test/indexer.c 1 test/BUG/indexer.c 1
+</list>
+<list> struct
+test/indexer.h 3 test/hashtable.h 3
+</list>
+<list> successfully
+test/hashtable.h 1
+</list>
+<list> table
+test/hashtable.h 18
+</list>
+<list> the
+test/hashtable.h 31
+</list>
+<list> there
+test/hashtable.h 1
+</list>
+<list> threshold
+test/hashtable.h 2
+</list>
+<list> to
+test/hashtable.h 9
+</list>
+<list> tokenizer
+test/makefile 4 test/m3 4 test/m2 4
+</list>
+<list> two
+test/hashtable.h 1
+</list>
+<list> typedef
+test/indexer.h 2 test/hashtable.h 4
+</list>
+<list> used
+test/hashtable.h 2
+</list>
+<list> using
+test/hashtable.h 1
+</list>
+<list> value
+test/indexer.c 1 test/hashtable.h 5 test/BUG/indexer.c 1
+</list>
+<list> value2
+test/indexer.c 1 test/BUG/indexer.c 1
+</list>
+<list> void
+test/hashtable.h 13
+</list>
+<list> wall
+test/t 2 test/makefile 2 test/m3 2 test/m2 2 test/compile 2
+test/HERRO/compile 2 test/BUG/lol 2
+</list>
+<list> was
+test/hashtable.h 2
+</list>
+<list> when
+test/hashtable.h 1
+</list>
+<list> which
+test/hashtable.h 2
+</list>
+<list> word
+test/indexer.h 1
+</list>
+<list> wordrecord
+test/indexer.h 2
+</list>

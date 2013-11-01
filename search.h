@@ -3,6 +3,7 @@
 #include <dirent.h>
 #include <sys/types.h>
 #include <string.h>
+#include <ctype.h>
 
 #define BUFFER_SIZE	2000
 #define QUERY_AND	0
@@ -28,12 +29,11 @@ typedef struct SearchWordNode SearchWordNode;
 struct SearchWordNode
 {
 	char *word;
-	SearchWordNode next;
+	SearchWordNode *next;
 };
-
-static WordNode *head = NULL;
 
 
 void printHelp();
 void clean();
 WordNode *readIndexFile(char *path);
+void insertIntoLL(SearchWordNode **head, SearchWordNode *node);
