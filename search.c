@@ -1,5 +1,6 @@
 #include "search.h"
 
+//Print usage of program if not invoked correctly.
 void printHelp()
 {
 	fprintf(stdout, "Usage: search <inverted-index file name>\n");
@@ -41,7 +42,7 @@ SearchWordNode *queryOr(WordNode *head, SearchWordNode *sWordHead)
 		for ( ; wcur != NULL; wcur = wcur->next)
 		{ //loop through all words indexed, note* sorted ASC
 			int cmp = strcmp(wcur->word, swcur->word);
-			if (cmp > 1) //indexed word is > search word, stop search of word
+			if (cmp > 0) //indexed word is > search word, stop search of word
 				break;
 			else if (cmp == 0) //word found, add to a LL that will be returned
 			{
@@ -51,7 +52,7 @@ SearchWordNode *queryOr(WordNode *head, SearchWordNode *sWordHead)
 					SearchWordNode *pnode = (SearchWordNode *) malloc(sizeof(SearchWordNode));
 					pnode->word = fcur->file; //not duplicated, reusing address
 					pnode->next = NULL;
-					insertIntoLL(&printHead, pnode);
+					insertIntoLL(&printHead, pnode, FREE_STRDUP_NO);
 				}
 			}
 		}
@@ -73,7 +74,7 @@ SearchWordNode *queryAnd(WordNode *head, SearchWordNode *sWord)
 	for ( ; wcur != NULL; wcur = wcur->next)
 	{ //loop through all words indexed, note* sorted ASC
 		int cmp = strcmp(wcur->word, sWord->word);
-		if (cmp > 1) //indexed word is > search word, stop search of word
+		if (cmp > 0) //indexed word is > search word, stop search of word
 			return NULL;
 		else if (cmp == 0) //word found, add to a LL that will be returned
 		{
@@ -84,7 +85,7 @@ SearchWordNode *queryAnd(WordNode *head, SearchWordNode *sWord)
 				SearchWordNode *pnode = (SearchWordNode *) malloc(sizeof(SearchWordNode));
 				pnode->word = fcur->file; //not duplicated, reusing address
 				pnode->next = NULL;
-				insertIntoLL(&printHead, pnode);
+				insertIntoLL(&printHead, pnode, FREE_STRDUP_NO);
 			}
 
 			//Recursive call to search for files containing the next word in query
@@ -106,7 +107,7 @@ SearchWordNode *queryAnd(WordNode *head, SearchWordNode *sWord)
 							SearchWordNode *pnode = (SearchWordNode *) malloc(sizeof(SearchWordNode));
 							pnode->word = p1->word;
 							pnode->next = NULL;
-							insertIntoLL(&p3,pnode);
+							insertIntoLL(&p3,pnode, FREE_STRDUP_NO);
 						}
 					}
 				}
@@ -132,7 +133,7 @@ SearchWordNode *queryAnd(WordNode *head, SearchWordNode *sWord)
 	return NULL;
 }
 
-void insertIntoLL(SearchWordNode **head, SearchWordNode *node)
+void insertIntoLL(SearchWordNode **head, SearchWordNode *node, int freeStrdup)
 {
 	//first insert, set node as head
 	if (*head == NULL) {
@@ -145,8 +146,12 @@ void insertIntoLL(SearchWordNode **head, SearchWordNode *node)
 	while (cur != NULL)
 	{
 		int cmp = strcmp(cur->word, node->word);
-		if (cmp == 0)
+		if (cmp == 0) {
+			if (freeStrdup == FREE_STRDUP_YES)
+				free(node->word);
+			free(node);
 			return; // duplicate was found, ignore it
+		}
 		else if (cmp > 0) 
 		{ //word is past the sorted location, so add word inbetween
 			if (prev == NULL) { // new node to add needs to be head
@@ -215,7 +220,7 @@ int main(int argc, char **argv)
 
 			sWordNode->word = strdup(token);
 			sWordNode->next = NULL;
-			insertIntoLL(&sWordHead, sWordNode);
+			insertIntoLL(&sWordHead, sWordNode, FREE_STRDUP_YES);
 		}
 
 		//Use our Index data and find files that satisfy query

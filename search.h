@@ -11,6 +11,8 @@
 #define BUFFER_SIZE	2000
 #define QUERY_AND	0
 #define QUERY_OR	1
+#define FREE_STRDUP_NO	2
+#define FREE_STRDUP_YES	3
 
 typedef struct FileNode FileNode;
 struct FileNode
@@ -38,7 +40,7 @@ struct SearchWordNode
 
 void printHelp();
 void clean(WordNode *head);
-void insertIntoLL(SearchWordNode **head, SearchWordNode *node);
+void insertIntoLL(SearchWordNode **head, SearchWordNode *node, int freeStrdup);
 SearchWordNode *queryOr(WordNode *head, SearchWordNode *sWordHead);
 SearchWordNode *queryAnd(WordNode *head, SearchWordNode *sWord);
 WordNode *readIndexFile(char *path);

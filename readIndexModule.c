@@ -4,7 +4,7 @@ WordNode *readIndexFile(char *path)
 {
 	FILE *file = fopen(path, "r");
 	if (file == NULL) {
-		fprintf(stderr, "ERROR: unable to read from file: '%s'", path);
+		fprintf(stderr, "ERROR: unable to read from file: '%s' :", path);
 		perror("");
 		return NULL;
 	}
