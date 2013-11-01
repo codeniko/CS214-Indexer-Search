@@ -6,6 +6,7 @@ void printHelp()
 	fprintf(stdout, "Usage: search <inverted-index file name>\n");
 }
 
+//Free memory taken up by index words/files read from input file
 void clean(WordNode *head)
 {
 	WordNode *cur = head;
@@ -27,6 +28,13 @@ void clean(WordNode *head)
 	}
 }
 
+/* Search through indexes and return result of query using logical AND
+PARAMETERS:
+	head = Pointer to head of Index struct
+	sWordHead = Pointer to head of search query words
+RETURNS:
+	A pointer to the head of a linked list holding all the files satisfying the query
+*/
 SearchWordNode *queryOr(WordNode *head, SearchWordNode *sWordHead)
 {
 	if (head == NULL) {
@@ -60,6 +68,17 @@ SearchWordNode *queryOr(WordNode *head, SearchWordNode *sWordHead)
 	return printHead;
 }
 
+/* Search through indexes and return result of query using logical OR 
+
+*NOTE - This is a recursive function that is called for each term in search query.
+		Parameter sWord will hold a smaller subset of query words for each recursive call
+
+PARAMETERS:
+	head = Pointer to head of Index struct
+	sWord = Pointer to head of a linked list holding a set of search query words
+RETURNS:
+	A pointer to the head of a linked list holding all the files satisfying the query
+*/
 SearchWordNode *queryAnd(WordNode *head, SearchWordNode *sWord)
 {
 	if (head == NULL) {
@@ -89,50 +108,70 @@ SearchWordNode *queryAnd(WordNode *head, SearchWordNode *sWord)
 			}
 
 			//Recursive call to search for files containing the next word in query
-			SearchWordNode *printHead2 = queryAnd(wcur, sWord->next);
-			if (printHead2 == NULL)
+			if (sWord->next == NULL) //no more words, return local printHead
 				return printHead;
-			else
+			else 
 			{
-				//go through printHead and printHead2 and create a LL subset that only contains files in both
-				SearchWordNode *p1 = NULL; //local file nodes
-				SearchWordNode *p2 = NULL; //recursively returned file nodes
-				SearchWordNode *p3 = NULL; //returned subset
-				for ( p1 = printHead; p1 != NULL; p1 = p1->next)
-				{
-					for (p2 = printHead2 ; p2 != NULL; p2 = p2->next)
+				SearchWordNode *printHead2 = queryAnd(wcur, sWord->next);
+				if (printHead2 == NULL) 
+				{ //next search word not found so logical and failed, free printHead LL
+					while(printHead != NULL)
 					{
-						//check if word is in both
-						if (strcmp(p1->word, p2->word) == 0) {
-							SearchWordNode *pnode = (SearchWordNode *) malloc(sizeof(SearchWordNode));
-							pnode->word = p1->word;
-							pnode->next = NULL;
-							insertIntoLL(&p3,pnode, FREE_STRDUP_NO);
+						SearchWordNode *temp = printHead->next;
+						free(printHead);
+						printHead = temp;
+					}
+					return NULL;
+				}
+				else
+				{
+					//go through printHead and printHead2 and create a LL subset that only contains files in both
+					SearchWordNode *p1 = NULL; //local file nodes
+					SearchWordNode *p2 = NULL; //recursively returned file nodes
+					SearchWordNode *p3 = NULL; //returned subset
+					for ( p1 = printHead; p1 != NULL; p1 = p1->next)
+					{
+						for (p2 = printHead2 ; p2 != NULL; p2 = p2->next)
+						{
+							//check if word is in both
+							if (strcmp(p1->word, p2->word) == 0) {
+								SearchWordNode *pnode = (SearchWordNode *) malloc(sizeof(SearchWordNode));
+								pnode->word = p1->word;
+								pnode->next = NULL;
+								insertIntoLL(&p3,pnode, FREE_STRDUP_NO);
+							}
 						}
 					}
-				}
 
-				//subset is created, free printHead and printHead2 LLs, return p3
-				while(printHead != NULL)
-				{
-					SearchWordNode *temp = printHead->next;
-					free(printHead);
-					printHead = temp;
+					//subset is created, free printHead and printHead2 LLs, return p3
+					while(printHead != NULL)
+					{
+						SearchWordNode *temp = printHead->next;
+						free(printHead);
+						printHead = temp;
+					}
+					while(printHead2 != NULL)
+					{
+						SearchWordNode *temp = printHead2->next;
+						free(printHead2);
+						printHead2 = temp;
+					}
+					return p3;
 				}
-				while(printHead2 != NULL)
-				{
-					SearchWordNode *temp = printHead2->next;
-					free(printHead2);
-					printHead2 = temp;
-				}
-				return p3;
 			}
-
 		}
 	}
 	return NULL;
 }
 
+/* Given a Linked List and a node, insert node into LL in sorted ASC order
+
+PARAMETERS:
+	head = Pointer to a Pointer to the head of a LL
+	node = Node to insert into LL pointed to by head
+	freeStrdup = Flag to free a malloced string if a duplicate is found
+					VALUES are FREE_STRDUP_YES, FREE_STRDUP_NO
+*/
 void insertIntoLL(SearchWordNode **head, SearchWordNode *node, int freeStrdup)
 {
 	//first insert, set node as head
