@@ -26,76 +26,6 @@ void clean(WordNode *head)
 	}
 }
 
-WordNode *readIndexFile(char *path)
-{
-	FILE *file = fopen(path, "r");
-	if (file == NULL) {
-		fprintf(stderr, "ERROR: unable to read from file: '%s'", path);
-		perror("");
-		return NULL;
-	}
-	
-	char buffer[BUFFER_SIZE];
-	char *token = NULL;
-	WordNode *head = NULL;
-	WordNode *wnode = NULL;
-	WordNode *tail = NULL;
-	FileNode *ftail = NULL;
-	while (fgets(buffer, BUFFER_SIZE, file))
-	{
-		token = strtok(buffer, " ");
-		if (token == NULL) { //if a line is empty
-			fprintf(stderr, "ERROR: Unexpected token, skipping line\n");
-			continue;
-		}
-
-		if (strncmp(token, "</list>", 7) == 0)
-		{ //end reading file list for a current word
-			wnode = NULL;
-			ftail = NULL;
-		}
-		else if (wnode != NULL)
-		{ //reading file list for a current word
-			do {
-				FileNode *fnode = (FileNode *) malloc(sizeof(FileNode));
-				int lastI = strlen(token) - 1;
-				if (token[lastI] == '\n') //remove trailing newline
-					token[lastI] = '\0';
-				fnode->file = strdup(token);
-				fnode->count = atoi(strtok(NULL, " "));
-				fnode->next = NULL;
-				if (ftail == NULL) {
-					ftail = fnode;
-					wnode->fnHead = fnode;
-				} else {
-					ftail->next = fnode;
-					ftail = fnode;
-				}
-			} while ( (token = strtok(NULL, " ")) != NULL );
-		}
-		else if (strncmp(token, "<list>", 6) == 0 && (token = strtok(NULL, " ")) != NULL)
-		{ //create new WordNode 
-			wnode = (WordNode *) malloc(sizeof(WordNode));
-			int lastI = strlen(token) - 1;
-			if (token[lastI] == '\n') //remove trailing newline
-				token[lastI] = '\0';
-			wnode->word = strdup(token);
-			wnode->next = NULL;
-			wnode->fnHead = NULL;
-			if (head == NULL) {
-				head = wnode;
-				tail = wnode;
-			} else {
-				tail->next = wnode;
-				tail = wnode;
-			}
-		}
-	}
-
-	fclose(file);
-	return head;
-}
-
 SearchWordNode *queryOr(WordNode *head, SearchWordNode *sWordHead)
 {
 	if (head == NULL) {
@@ -107,13 +37,13 @@ SearchWordNode *queryOr(WordNode *head, SearchWordNode *sWordHead)
 	SearchWordNode *swcur = NULL;
 	WordNode *wcur = head;
 	for (swcur = sWordHead; swcur != NULL; swcur = swcur->next)
-	{
+	{ //loop through all words in search query, sorted ASC
 		for ( ; wcur != NULL; wcur = wcur->next)
 		{ //loop through all words indexed, note* sorted ASC
 			int cmp = strcmp(wcur->word, swcur->word);
 			if (cmp > 1) //indexed word is > search word, stop search of word
 				break;
-			else if (cmp == 0) //word found, print all files containing word
+			else if (cmp == 0) //word found, add to a LL that will be returned
 			{
 				FileNode *fcur = NULL;
 				for (fcur = wcur->fnHead; fcur != NULL; fcur = fcur->next)
@@ -129,11 +59,75 @@ SearchWordNode *queryOr(WordNode *head, SearchWordNode *sWordHead)
 	return printHead;
 }
 
-SearchWordNode *queryAnd(WordNode *head, SearchWordNode *sWordHead)
+SearchWordNode *queryAnd(WordNode *head, SearchWordNode *sWord)
 {
 	if (head == NULL) {
 		fprintf(stderr, "ERROR: No Index data read into memory.\n");
 		return NULL;
+	}
+	if (sWord == NULL)
+		return NULL;
+
+	SearchWordNode *printHead = NULL;
+	WordNode *wcur = head;
+	for ( ; wcur != NULL; wcur = wcur->next)
+	{ //loop through all words indexed, note* sorted ASC
+		int cmp = strcmp(wcur->word, sWord->word);
+		if (cmp > 1) //indexed word is > search word, stop search of word
+			return NULL;
+		else if (cmp == 0) //word found, add to a LL that will be returned
+		{
+			//Get all files that contain this word
+			FileNode *fcur = NULL;
+			for (fcur = wcur->fnHead; fcur != NULL; fcur = fcur->next)
+			{
+				SearchWordNode *pnode = (SearchWordNode *) malloc(sizeof(SearchWordNode));
+				pnode->word = fcur->file; //not duplicated, reusing address
+				pnode->next = NULL;
+				insertIntoLL(&printHead, pnode);
+			}
+
+			//Recursive call to search for files containing the next word in query
+			SearchWordNode *printHead2 = queryAnd(wcur, sWord->next);
+			if (printHead2 == NULL)
+				return printHead;
+			else
+			{
+				//go through printHead and printHead2 and create a LL subset that only contains files in both
+				SearchWordNode *p1 = NULL; //local file nodes
+				SearchWordNode *p2 = NULL; //recursively returned file nodes
+				SearchWordNode *p3 = NULL; //returned subset
+				for ( p1 = printHead; p1 != NULL; p1 = p1->next)
+				{
+					for (p2 = printHead2 ; p2 != NULL; p2 = p2->next)
+					{
+						//check if word is in both
+						if (strcmp(p1->word, p2->word) == 0) {
+							SearchWordNode *pnode = (SearchWordNode *) malloc(sizeof(SearchWordNode));
+							pnode->word = p1->word;
+							pnode->next = NULL;
+							insertIntoLL(&p3,pnode);
+						}
+					}
+				}
+
+				//subset is created, free printHead and printHead2 LLs, return p3
+				while(printHead != NULL)
+				{
+					SearchWordNode *temp = printHead->next;
+					free(printHead);
+					printHead = temp;
+				}
+				while(printHead2 != NULL)
+				{
+					SearchWordNode *temp = printHead2->next;
+					free(printHead2);
+					printHead2 = temp;
+				}
+				return p3;
+			}
+
+		}
 	}
 	return NULL;
 }
@@ -171,45 +165,7 @@ void insertIntoLL(SearchWordNode **head, SearchWordNode *node)
 	//if reach this point, word is NOT in list and needs to be added to the end.
 	prev->next = node;
 }
-/*
-int writeToFile(WordNode *head, char *file)
-{
-	WordNode *cur = head;
-	if (cur == NULL) {
-		printf("There is nothing to write to '%s'", file);
-		return 1;
-	}
-	FILE *fd = fopen(file, "w");
-	if (fd == NULL) {
-		fprintf(stderr, "ERROR opening file '%s' to write.", file);
-		return 0;
-	}
-	while (cur != NULL)
-	{
-		fprintf(fd, "<list> %s\n", cur->word);
-		int count = 1;
-		FileNode *fcur = cur->fnHead;
-		while (fcur != NULL)
-		{
-			if (count == 1) {
-				fprintf(fd, "%s %d", fcur->file, fcur->count);
-			} else {
-				fprintf(fd, " %s %d", fcur->file, fcur->count);
-			}
-			fcur = fcur->next;
-			if (count++ == 5 && fcur != NULL) {
-				fprintf(fd, "\n");
-				count = 1;
-			}
-		}
-		fprintf(fd, "\n</list>\n");
-		cur = cur->next;
-	}
 
-	fclose(fd);
-	return 1;
-}
-*/
 int main(int argc, char **argv)
 {
 	if (argc != 2) {

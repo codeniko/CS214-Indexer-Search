@@ -1,3 +1,6 @@
+#ifndef ___search_h___
+#define ___search_h___
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <dirent.h>
@@ -34,6 +37,10 @@ struct SearchWordNode
 
 
 void printHelp();
-void clean();
-WordNode *readIndexFile(char *path);
+void clean(WordNode *head);
 void insertIntoLL(SearchWordNode **head, SearchWordNode *node);
+SearchWordNode *queryOr(WordNode *head, SearchWordNode *sWordHead);
+SearchWordNode *queryAnd(WordNode *head, SearchWordNode *sWord);
+WordNode *readIndexFile(char *path);
+
+#endif
