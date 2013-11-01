@@ -19,7 +19,7 @@ WordNode *readIndexFile(char *path)
 	{
 		token = strtok(buffer, " ");
 		if (token == NULL) { //if a line is empty
-			fprintf(stderr, "ERROR: Unexpected token, skipping line\n");
+			//fprintf(stderr, "ERROR: Unexpected token, skipping line\n");
 			continue;
 		}
 
@@ -36,7 +36,12 @@ WordNode *readIndexFile(char *path)
 				if (token[lastI] == '\n') //remove trailing newline
 					token[lastI] = '\0';
 				fnode->file = strdup(token);
-				fnode->count = atoi(strtok(NULL, " "));
+				token = strtok(NULL, " ");
+				if (token == NULL) {
+					fprintf(stderr, "ERROR: Unexpected format for input file.\n");
+					return NULL;
+				}
+				fnode->count = atoi(token);
 				fnode->next = NULL;
 				if (ftail == NULL) {
 					ftail = fnode;
