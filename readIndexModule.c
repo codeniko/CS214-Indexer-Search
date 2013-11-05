@@ -72,5 +72,7 @@ WordNode *readIndexFile(char *path)
 	}
 
 	fclose(file);
+	if (head == NULL)
+		fprintf(stderr, "ERROR: file is either empty or formatted incorrectly.\n");
 	return head;
 }
